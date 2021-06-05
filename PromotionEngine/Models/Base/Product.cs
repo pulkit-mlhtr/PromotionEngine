@@ -18,7 +18,7 @@ namespace PromotionEngine.Models.Base
             promos = new List<Promotion>();
         }
 
-        public abstract void AddPromotion(string id, Promotion promo);
+        public void AddPromotion(Promotion promo) => promos.Add(promo);
 
         /// <summary>
         /// Check if the product has any promotion offers

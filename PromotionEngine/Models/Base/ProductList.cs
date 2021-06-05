@@ -1,4 +1,5 @@
 ﻿using PromotionEngine.Models.Base;
+using PromotionEngine.Models.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
