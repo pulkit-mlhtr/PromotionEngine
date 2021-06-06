@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PromotionEngine.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,13 @@ namespace PromotionEngine.Dao.Repository
         static OrderList()
         {
             placedOrders = new List<Order>();
+        }
+
+        public static Order Get(Guid orderId)
+        {
+            return placedOrders
+                .Where(x => x.OrderID == orderId)
+                .FirstOrDefault();
         }
 
         public static IList<Order> GetAll()
