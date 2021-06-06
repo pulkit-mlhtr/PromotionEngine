@@ -1,10 +1,9 @@
 ﻿using PromotionEngine.Dao.Interface;
+using PromotionEngine.Extensions;
 using PromotionEngine.Logic.Interface;
 using PromotionEngine.Models.Base;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace PromotionEngine.Logic
 {
@@ -24,24 +23,15 @@ namespace PromotionEngine.Logic
             return _promoLogic.GetComboPromotions(productId).Any();
         }
 
+
         public bool CheckStandardPromotion(string productId)
         {
             return _promoLogic.GetStandardPromotions(productId).Any();
         }
 
-        public void AddPromotion(Promotion promo)
-        {
-            _promoLogic.AddStandardPromotion(promo);
-        }
-
         public void AddStandardPromotion(Promotion promo)
         {
-            throw new NotImplementedException();
-        }
-
-        public void AddComboPromotion(Promotion promo)
-        {
-            throw new NotImplementedException();
+            _promoLogic.AddStandardPromotion(promo);
         }
 
         public Promotion GetComboPromotionById(string comboId)
@@ -64,6 +54,7 @@ namespace PromotionEngine.Logic
         public Product ApplyProductPromotion(Product product, int orderQuantity, IList<string> comboList)
         {
             decimal discountPrice = 0m;
+            decimal orginalPrice = product.Price;
 
             if (CheckStandardPromotion(product.Id))
             {
@@ -85,10 +76,14 @@ namespace PromotionEngine.Logic
             }
             else
             {
-                if(comboList.Any(x=>CheckComboPromotion(x)))
+                if (comboList.Any(x => CheckComboPromotion(x) || CheckComboPromotion(x.ToReverse())))
                 {
-                    return ApplyComboPromotion(product, orderQuantity, comboList);
-                }                
+                    product = ApplyComboPromotion(product, orderQuantity, comboList);                    
+                }
+                else
+                {
+                    product.Price = orderQuantity * product.Price;
+                }
             }
 
 
@@ -104,7 +99,7 @@ namespace PromotionEngine.Logic
                 if (CheckComboPromotion(combo))
                 {
                     product.Id = combo;
-                    calculatedPrice += GetPrice(GetComboPromotionById(combo), product);
+                    calculatedPrice += _promoLogic.GetPrice(GetComboPromotionById(combo), product);
                 }
             }
 
@@ -116,15 +111,6 @@ namespace PromotionEngine.Logic
             product.Price = calculatedPrice;
 
             return product;
-        }
-
-        private static decimal GetPrice(Promotion promotion, Product product)
-        {
-            return promotion.UnitOfPromo == PromoUnit.FlatPrice
-                ? promotion.PromoPrice
-                : promotion.DiscountPercent > 0 && promotion.UnitOfPromo == PromoUnit.Percentage ?
-                product.Price * (promotion.DiscountPercent / 100)
-                : product.Price;
         }
     }
 }
