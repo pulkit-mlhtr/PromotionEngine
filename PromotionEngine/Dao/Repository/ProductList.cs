@@ -3,7 +3,6 @@ using PromotionEngine.Models.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace PromotionEngine.Dao.Repository
 {
@@ -15,7 +14,7 @@ namespace PromotionEngine.Dao.Repository
         private static List<Product> SkuList;
         static ProductList()
         {
-            SkuList = new List<Product>();           
+            SkuList = new List<Product>();
         }
 
         /// <summary>
@@ -59,7 +58,7 @@ namespace PromotionEngine.Dao.Repository
 
         public static void AddProduct(Product product)
         {
-            if(!DoesExist(product.Id))
+            if (!DoesExist(product.Id))
             {
                 SkuList.Add(product);
             }

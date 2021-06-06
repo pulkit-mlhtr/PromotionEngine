@@ -3,7 +3,6 @@ using PromotionEngine.Dao.Repository;
 using PromotionEngine.Models;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace PromotionEngine.Dao
 {

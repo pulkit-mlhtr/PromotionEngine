@@ -6,7 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Dao\Interface\" />
     <Folder Include="DI\" />
   </ItemGroup>
 

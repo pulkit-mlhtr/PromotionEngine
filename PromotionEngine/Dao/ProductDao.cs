@@ -1,9 +1,7 @@
 ﻿using PromotionEngine.Dao.Interface;
 using PromotionEngine.Dao.Repository;
 using PromotionEngine.Models.Base;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace PromotionEngine.Dao
 {

@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace PromotionEngine.Dao.Repository
 {
@@ -32,7 +31,7 @@ namespace PromotionEngine.Dao.Repository
 
         public static void AddOrder(Order order)
         {
-            if(!placedOrders.Any(x=>x.OrderID==order.OrderID))
+            if (!placedOrders.Any(x => x.OrderID == order.OrderID))
             {
                 placedOrders.Add(order);
             }

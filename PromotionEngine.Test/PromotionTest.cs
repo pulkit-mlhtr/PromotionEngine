@@ -1,9 +1,11 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PromotionEngine.Logic.Interface;
 using PromotionEngine.Models.Base;
+using PromotionEngine.Models.Products;
 using PromotionEngine.Models.Promotions;
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace PromotionEngine.Test
 {
@@ -11,12 +13,45 @@ namespace PromotionEngine.Test
     public class PromotionTest
     {
         [TestMethod]
-        public void UpdateStandardPromotionTest()
+        public void ApplyPromoTest()
         {
-            Promotion promotion = new PromotionA(Guid.NewGuid(), "A", 1, 30m, PromoUnit.FlatPrice);
-            var newPrice = 10;
-            promotion.UpdateStandardPromotion("A", 10);
-            Assert.AreEqual(promotion.GetStandardPromotionList()["A"], newPrice);
+            var promotionLogic = Startup.collection.BuildServiceProvider().GetService<IPromotionLogic>();
+           
+            var product = new ProductA("A", 50);
+            var promotion = new PromotionA(Guid.NewGuid(), "A", 2, 70, PromoUnit.FlatPrice);
+
+            decimal expectedPrice = 190m;
+            decimal actualPrice = promotionLogic.ApplyPromo(product, 5, promotion);
+
+            Assert.AreEqual(expectedPrice, actualPrice);
+        }
+
+        [TestMethod]
+        public void GetPrice_FlatPriceTest()
+        {
+            var promotionLogic = Startup.collection.BuildServiceProvider().GetService<IPromotionLogic>();
+
+            var product = new ProductA("A", 50);
+            var promotion = new PromotionA(Guid.NewGuid(), "A", 2, 70, PromoUnit.FlatPrice);
+
+            decimal expectedPrice = 70m;
+            decimal actualPrice = promotionLogic.GetPrice(promotion,product);
+
+            Assert.AreEqual(expectedPrice, actualPrice);
+        }
+
+        [TestMethod]
+        public void GetPrice_PercentageTest()
+        {
+            var promotionLogic = Startup.collection.BuildServiceProvider().GetService<IPromotionLogic>();
+
+            var product = new ProductA("A", 50);
+            var promotion = new PromotionA(Guid.NewGuid(), "A", 2, 10, PromoUnit.Percentage);
+
+            decimal expectedPrice = 45m;
+            decimal actualPrice = promotionLogic.GetPrice(promotion, product);
+
+            Assert.AreEqual(expectedPrice, actualPrice);
         }
     }
 }

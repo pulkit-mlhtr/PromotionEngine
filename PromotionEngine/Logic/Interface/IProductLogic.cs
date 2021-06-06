@@ -1,7 +1,5 @@
 ﻿using PromotionEngine.Models.Base;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace PromotionEngine.Logic.Interface
 {
@@ -26,15 +24,26 @@ namespace PromotionEngine.Logic.Interface
         void AddStandardPromotion(Promotion promo);
 
         /// <summary>
-        /// Add combo offers
+        /// Get Combo Promotions by combo Id
         /// </summary>
-        /// <param name="promo"></param>
-        void AddComboPromotion(Promotion promo);
-
+        /// <param name="comboId"></param>
+        /// <returns></returns>
         Promotion GetComboPromotionById(string comboId);
 
+        /// <summary>
+        /// Get all products with promotions
+        /// </summary>
+        /// <returns></returns>
         List<Product> GetAllProducts();
 
-        Product ApplyProductPromotion(Product product, int orderQuantity,IList<string> comboList);
+        /// <summary>
+        /// Check and apply for one promotion on the product.
+        /// Standard promotion is prioritized
+        /// </summary>
+        /// <param name="product"></param>
+        /// <param name="orderQuantity"></param>
+        /// <param name="comboList"></param>
+        /// <returns></returns>
+        Product ApplyProductPromotion(Product product, int orderQuantity, IList<string> comboList);
     }
 }

@@ -1,10 +1,9 @@
-﻿using PromotionEngine.Dao.Interface;
+﻿
+using PromotionEngine.Dao.Interface;
 using PromotionEngine.Logic.Interface;
 using PromotionEngine.Models.Base;
 using PromotionEngine.Models.Promotions;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace PromotionEngine.Logic
 {
@@ -30,7 +29,7 @@ namespace PromotionEngine.Logic
         public IList<Promotion> GetStandardPromotions(string productId)
         {
             return _promoDao.GetStandardPromotions(productId);
-        }       
+        }
 
         public decimal ApplyPromo(Product product, int orderQuantity, Promotion promo)
         {
@@ -38,13 +37,22 @@ namespace PromotionEngine.Logic
 
             while (promo.ProductQuantity < orderQuantity)
             {
-                price += promo.PromoPrice;
+                price += GetPrice(promo,product);
                 orderQuantity = orderQuantity - promo.ProductQuantity;
             };
 
             price += orderQuantity * product.Price;
 
             return price;
-        }        
+        }
+
+        public decimal GetPrice(Promotion promotion, Product product)
+        {
+            return promotion.UnitOfPromo == PromoUnit.FlatPrice
+                ? promotion.PromoPrice
+                : promotion.UnitOfPromo == PromoUnit.Percentage ?
+                product.Price - (product.Price * (promotion.PromoPrice / 100))
+                : product.Price;
+        }
     }
 }
