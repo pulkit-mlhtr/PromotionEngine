@@ -13,10 +13,10 @@ namespace PromotionEngine.Test
         [TestMethod]
         public void UpdateStandardPromotionTest()
         {
-            Promotion promotion = new PromotionA(Guid.NewGuid(), "A", 1, 30m, "Rs");
+            Promotion promotion = new PromotionA(Guid.NewGuid(), "A", 1, 30m, PromoUnit.FlatPrice);
             var newPrice = 10;
             promotion.UpdateStandardPromotion("A", 10);
-            Assert.AreEqual(promotion.StandardPromotions["A"], newPrice);
+            Assert.AreEqual(promotion.GetStandardPromotionList()["A"], newPrice);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace PromotionEngine.Test
             Product product = new ProductA("A", 50m);
 
             product.AddPromotion(
-                new PromotionA(Guid.NewGuid(), product.Id,3, 40, "Percent"));
+                new PromotionA(Guid.NewGuid(), product.Id,3, 40, PromoUnit.Percentage));
 
             Assert.IsTrue(product.promos.Count > 0);            
         }

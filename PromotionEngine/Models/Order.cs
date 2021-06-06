@@ -9,8 +9,9 @@ namespace PromotionEngine.Models
     {
         public Guid OrderID { get; set; }
         public List<Product> Products { get; set; }
+        public decimal CartValue { get; set; }
 
-        public Order(int _oid, List<Product> _prods)
+        public Order(List<Product> _prods)
         {
             this.OrderID = Guid.NewGuid();
             this.Products = _prods;

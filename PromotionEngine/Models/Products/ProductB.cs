@@ -1,4 +1,5 @@
 ﻿using PromotionEngine.Models.Base;
+using PromotionEngine.Models.Promotions;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,7 +11,7 @@ namespace PromotionEngine.Models.Products
         public ProductB(string productId, decimal price)
             :base(productId,price)
         {
-            //AddPromotion(new Promotion)
+            AddPromotion(new PromotionB(Guid.NewGuid(), productId, 2, 45m, PromoUnit.FlatPrice));
         }
     }
 }

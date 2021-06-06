@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace PromotionEngine.Models.Base
+namespace PromotionEngine.Dao.Repository
 {
     /// <summary>
     /// Represents as database list of items available for adding in the cart

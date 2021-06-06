@@ -5,12 +5,12 @@ using System.Text;
 
 namespace PromotionEngine.Models.Promotions
 {
-    public class PromotionA : Promotion
+    public class PromotionB : Promotion
     {
-        public PromotionA(Guid promoId, string productId,int productQuantity,decimal promoPrice,PromoUnit unitOfPromo)
+        public PromotionB(Guid promoId, string productId,int productQuantity,decimal promoPrice,PromoUnit unitOfPromo)
             :base(promoId,productId,productQuantity,promoPrice,unitOfPromo)
         {
-            AddStandardPromotion("A", 10);
+            AddStandardPromotion("B", 10);
         }
     }
 }

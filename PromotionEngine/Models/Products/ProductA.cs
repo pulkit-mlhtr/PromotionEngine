@@ -11,7 +11,7 @@ namespace PromotionEngine.Models.Products
         public ProductA(string productId, decimal price)
             :base(productId,price)
         {
-            AddPromotion(new PromotionA(Guid.NewGuid(), productId, 3, 130m, "Rs"));
+            AddPromotion(new PromotionA(Guid.NewGuid(), productId, 3, 130m, PromoUnit.FlatPrice));
         }
     }
 }

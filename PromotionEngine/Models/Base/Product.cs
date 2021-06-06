@@ -12,21 +12,27 @@ namespace PromotionEngine.Models.Base
         public List<Promotion> promos;
 
         public Product(string id, decimal price)
-        {           
+        {
             this.Id = id;
             this.Price = price;
             promos = new List<Promotion>();
         }
 
-        public void AddPromotion(Promotion promo) => promos.Add(promo);
+        public void AddPromotion(Promotion promo)
+        {
+            if(!promos.Contains(promo))
+            {
+                promos.Add(promo);
+            }            
+        }
 
         /// <summary>
         /// Check if the product has any promotion offers
         /// </summary>       
         /// <returns></returns>
-        public bool CheckPromotion()
+        public bool CheckComboPromotion(string productId)
         {
-            return promos.Any();
+            return Promotion.ComboPromotions.Any(x => x.Key.Equals(productId));
         }
     }
 }
